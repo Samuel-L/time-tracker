@@ -6,11 +6,16 @@ import (
 	"time"
 
 	"github.com/Samuel-L/time-tracker/internal/action"
+	"github.com/joho/godotenv"
 
 	"github.com/urfave/cli"
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .new file")
+	}
+
 	app := cli.NewApp()
 	app.Name = "tt (time tracker)"
 	app.Description = "Track your time working on projects!"

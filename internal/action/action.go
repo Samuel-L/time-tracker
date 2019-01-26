@@ -3,6 +3,8 @@ package action
 import (
 	"fmt"
 	"time"
+
+	"github.com/Samuel-L/time-tracker/internal/helpers"
 )
 
 // StartTimer constant
@@ -26,7 +28,25 @@ func (action *Action) toString() string {
 	)
 }
 
+type payload struct {
+	ActionType string `json:"action"`
+	Project    string `json:"project"`
+	Timestamp  string `json:"timestamp"`
+}
+
 // Dispatch an action
-func Dispatch(action *Action) {
-	fmt.Printf("DISPATCHING ACTION: %s\n", action.toString())
+func Dispatch(action *Action) error {
+	client, ctx := helpers.FirebaseClient()
+	ref := client.NewRef("actions")
+
+	timestamp := action.Timestamp.Format(time.RFC3339)
+
+	if _, err := ref.Push(ctx, &payload{
+		ActionType: action.ActionType,
+		Project:    action.Project,
+		Timestamp:  timestamp,
+	}); err != nil {
+		return err
+	}
+	return nil
 }
