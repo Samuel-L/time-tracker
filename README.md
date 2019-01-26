@@ -11,15 +11,16 @@ Track your projects
 * A [service account](https://developers.google.com/identity/protocols/OAuth2ServiceAccount) json file
 
 ## Installation
-### Using `install.sh` script
-Todo
 
-### Using `go get`
 **Note**: First you need to add the environment variables for the URL to the Firebase Realtime Database (var: `TRACKER_DB_URL`) and the service account json file (var: `TRACKER_SERVICE_ACCOUNT`). You can do this manually or by running the following:
 ```bash
 # Todo using preinstall.sh
 ```
-Now:
+
+### Using `install.sh` script
+Todo
+
+### Using `go get`
 ```bash
 $ go get -u github.com/Samuel-L/time-tracker
 # If your $GOPATH/bin is in your PATH, you can simply:
