@@ -29,7 +29,7 @@ func (action *Action) toString() string {
 }
 
 type payload struct {
-	ActionType string `json:"action"`
+	ActionType string `json:"actionType"`
 	Project    string `json:"project"`
 	Timestamp  string `json:"timestamp"`
 }
@@ -49,4 +49,16 @@ func Dispatch(action *Action) error {
 		return err
 	}
 	return nil
+}
+
+// Fetch data
+func Fetch() (map[string]Action, error) {
+	client, ctx := helpers.FirebaseClient()
+	ref := client.NewRef("actions")
+
+	var data map[string]Action
+	if err := ref.Get(ctx, &data); err != nil {
+		return nil, err
+	}
+	return data, nil
 }

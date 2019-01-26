@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"time"
 
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/db"
@@ -30,4 +31,12 @@ func FirebaseClient() (*db.Client, context.Context) {
 		log.Fatalln("Error initializing database client:", err)
 	}
 	return client, ctx
+}
+
+// IsToday - check if today
+func IsToday(timestamp time.Time) bool {
+	nowYear, nowMonth, nowDay := time.Now().Date()
+	timestampYear, timestampMonth, timestampDay := timestamp.Date()
+
+	return nowYear == timestampYear && nowMonth == timestampMonth && nowDay == timestampDay
 }
