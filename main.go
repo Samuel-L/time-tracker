@@ -1,17 +1,67 @@
 package main
 
 import (
+	"log"
+	"os"
 	"time"
 
 	"github.com/Samuel-L/time-tracker/internal/action"
+
+	"github.com/urfave/cli"
 )
 
 func main() {
-	timerAction := action.Action{
-		ActionType: action.StartTimer,
-		Project:    "Time Tracker",
-		Timestamp:  time.Now(),
+	app := cli.NewApp()
+	app.Name = "tt (time tracker)"
+	app.Description = "Track your time working on projects!"
+
+	app.Commands = []cli.Command{
+		{
+			Name:  "start",
+			Usage: "start tracking a project",
+			Action: func(c *cli.Context) error {
+				return start(c)
+			},
+		},
+		{
+			Name:  "stop",
+			Usage: "stop tracking a project",
+			Action: func(c *cli.Context) error {
+				return stop(c)
+			},
+		},
 	}
 
-	action.Dispatch(&timerAction)
+	err := app.Run(os.Args)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+func start(ctx *cli.Context) error {
+	project := ctx.Args().First()
+	if project == "" {
+		return cli.NewExitError("Usage: tt start <project_name>", 2)
+	}
+	startAction := action.Action{
+		ActionType: action.StartTimer,
+		Project:    project,
+		Timestamp:  time.Now(),
+	}
+	action.Dispatch(&startAction)
+	return nil
+}
+
+func stop(ctx *cli.Context) error {
+	project := ctx.Args().First()
+	if project == "" {
+		return cli.NewExitError("Usage: tt stop <project_name>", 2)
+	}
+	startAction := action.Action{
+		ActionType: action.StopTimer,
+		Project:    project,
+		Timestamp:  time.Now(),
+	}
+	action.Dispatch(&startAction)
+	return nil
 }
