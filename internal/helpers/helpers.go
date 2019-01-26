@@ -15,10 +15,10 @@ import (
 func FirebaseClient() (*db.Client, context.Context) {
 	ctx := context.Background()
 	conf := &firebase.Config{
-		DatabaseURL: os.Getenv("DB_URL"),
+		DatabaseURL: os.Getenv("TRACKER_DB_URL"),
 	}
 	// Fetch the service account key JSON file contents
-	opt := option.WithCredentialsFile(os.Getenv("SERVICE_ACCOUNT"))
+	opt := option.WithCredentialsFile(os.Getenv("TRACKER_SERVICE_ACCOUNT"))
 
 	// Initialize the app with a service account, granting admin privileges
 	app, err := firebase.NewApp(ctx, conf, opt)

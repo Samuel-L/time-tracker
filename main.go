@@ -8,19 +8,22 @@ import (
 
 	"github.com/Samuel-L/time-tracker/internal/action"
 	"github.com/Samuel-L/time-tracker/internal/helpers"
-	"github.com/joho/godotenv"
 
 	"github.com/urfave/cli"
 )
 
 func main() {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file")
+	if os.Getenv("TRACKER_DB_URL") == "" {
+		log.Fatal("Environment variable 'TRACKER_DB_URL' not set.")
+	}
+	if os.Getenv("TRACKER_SERVICE_ACCOUNT") == "" {
+		log.Fatal("Environment variable 'TRACKER_SERVICE_ACCOUNT' not set.")
 	}
 
 	app := cli.NewApp()
-	app.Name = "tt (time tracker)"
+	app.Name = "time tracker"
 	app.Description = "Track your time working on projects!"
+	app.Version = "0.5.0"
 
 	app.Commands = []cli.Command{
 		{
