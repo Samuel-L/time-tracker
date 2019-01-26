@@ -53,7 +53,10 @@ func start(ctx *cli.Context) error {
 		Project:    project,
 		Timestamp:  time.Now(),
 	}
-	action.Dispatch(&startAction)
+	err := action.Dispatch(&startAction)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -62,11 +65,14 @@ func stop(ctx *cli.Context) error {
 	if project == "" {
 		return cli.NewExitError("Usage: tt stop <project_name>", 2)
 	}
-	startAction := action.Action{
+	stopAction := action.Action{
 		ActionType: action.StopTimer,
 		Project:    project,
 		Timestamp:  time.Now(),
 	}
-	action.Dispatch(&startAction)
+	err := action.Dispatch(&stopAction)
+	if err != nil {
+		return err
+	}
 	return nil
 }
