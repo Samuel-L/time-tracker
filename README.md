@@ -17,8 +17,15 @@ Track your projects
 # Todo using preinstall.sh
 ```
 
+### Using `Homebrew`
+```bash
+# Todo
+```
+
 ### Using `install.sh` script
-Todo
+```bash
+# Todo
+```
 
 ### Using `go get`
 ```bash
